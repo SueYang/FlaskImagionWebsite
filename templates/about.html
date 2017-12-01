@@ -1,0 +1,180 @@
+﻿<!doctype html>
+
+
+
+<head>
+
+	<title>Imagion - Image Scoring for Instagram Advertiser</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+    <link rel="shortcut icon" type="image/png" href="/static/images/favicon.png"/>
+
+    <!-- this styles only adds some repairs on idevices  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+
+
+<body class="about">
+
+
+<!-- / Site Header -->
+<div class="site-header">
+
+
+    <!-- / Site Logo -->
+	<div class="site-logo">
+    	<img src="/static/images/site-logo.png" />
+    </div>
+	<!-- \ Site Logo -->
+
+
+    <!-- / Site Menu -->
+    <div class="site-menu">
+    	<div class="icon"></div>
+        <div class="menu">
+            <ul>
+				<li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+				<li><a href="{{ url_for('upload_picture') }}">Upload Your Picture</a></li>
+				<li><a href="{{ url_for('blog') }}">Blog / News</a></li>
+				<li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+	<!-- \ Site Menu -->
+
+
+    <!-- / Site Description -->
+    <h1>
+    A smart image scoring system for Instagram advertisers.
+    </h1>
+	<!-- \ Site Description -->
+
+
+    <!-- / Site Footer -->
+    <div class="site-footer">
+        <div class="site-social">
+            <ul>
+                <li><i class="pe-so-dribbble pe-lg pe-va"></i></li>
+                <li><i class="pe-so-facebook pe-lg pe-va"></i></li>
+                <li><i class="pe-so-twitter pe-lg pe-va"></i></li>
+            </ul>
+        </div>
+
+    	<p>© 2017 Imagion</p>
+        <p>2017 UCB MIDS</a></p>
+    </div>
+    <!-- \ Site Footer -->
+
+</div>
+<!-- \ Site Header -->
+
+
+<!-- / Site Main -->
+<div class="site-main">
+    <div class="inner clearfix">
+
+        <h2>ABOUT</h2>
+
+
+
+        <!-- / Services Widget -->
+        <div class="widget services">
+        	<h3 class="title">Imagion</h3>
+            <p class="desc">In the world of Instagram advertising, advertisers currently rely heavily on intuition during the process of deciding which image to use in an advertisement. There are no prominent decision-making tools available that allow advertisers to take an objective look at the “ad quality” of a given image. This leads to a significant amount of wasted budget on suboptimal ads or A/B tests where time and money is wasted on the subpar ads. </p>
+            <p class="desc">Imagion allows you to get an objective score corresponding to the calculated quality of a given image. Prior to deciding upon an image to use in an IG advertisement, advertisers can run the images that are in consideration through Imagion in order get scores for each image that they can factor into their decision as to which image to use.
+			<div class="row">
+				<div class="col-md-4 list clearfix">
+					<span class="pe-7s-camera icon"></span>
+					<p class="sub-title">Your Pictures</p>
+					<p class="sub-desc">Get your pictures ready for Imagion</p>
+					<p class="link"><a href="#">more</a></p>
+				</div>
+				<div class="col-md-4 list clearfix">
+					<span class="pe-7s-cloud icon"></span>
+					<p class="sub-title">We Analysis</p>
+					<p class="sub-desc">Upload pictures and we analyze</p>
+					<p class="link"><a href="#">more</a></p>
+				</div>
+				<div class="col-md-4 list clearfix">
+					<span class="pe-7s-magic-wand icon"></span>
+					<p class="sub-title">Get Insight</p>
+					<p class="sub-desc">Get score/ranking of pictures</p>
+					<p class="link"><a href="#">more</a></p>
+				</div>
+			</div>
+        </div>
+        <!-- \ Services Widget -->
+
+
+
+        <!-- / Staff Widget -->
+        <!--icons see: http://themes-pixeden.com/font-demos/social/documentation.html-->
+        <div class="widget staff">
+        	<h3 class="title">Our Team</h3>
+            <p class="desc">We are team from UC Berkeley MIDS program. Imagion is our capstone project. We got this idea from that as Instagram user we found that the advertising’s appeal to the audience rely heavily on of the media to use in an advertisement. Due to this project’s time estimate we decide to focus on the static media—images. [add brief introduction of project development phases] . Hopefully after graduation we can extend this to other media as well.</p>
+            <p class="desc">Haroon[add introduction]</p>
+            <p class="desc">Roiana[add introduction]</p>
+            <p class="desc">Sue took the responsibility of data exploration and data visualization part. She is super interested in deep learning and data visualization. Sue loves photography and has a cute bunny named Puffy.</p>
+
+
+			<div class="row">
+				<div class="col-md-4 list clearfix">
+					<p class="image"><img src="/static/images/haroon.jpg" class="img-circle"></p>
+					<p class="name">Haroon Choudery</p>
+					<!--<p class="role">General Manager</p>-->
+					<p class="links">
+                    	<a href="https://www.ischool.berkeley.edu/people/haroon-choudery"><i class="pe-so-dribbble pe-color pe-lg pe-va"></i></a>
+                    	<a href=""><i class="pe-so-instagram pe-color pe-lg pe-va"></i></a>
+                    	<a href="https://linkedin.com/in/haroonchoudery"><i class="pe-so-linkedin pe-color pe-lg pe-va"></i></a>
+                    </p>
+			    </div>
+				<div class="col-md-4 list clearfix">
+					<p class="image"><img src="/static/images/roiana.jpg" class="img-circle"></p>
+					<p class="name">Roiana Reid</p>
+					<!--<p class="role">General Manager</p>-->
+					<p class="links">
+                    	<a href="https://www.ischool.berkeley.edu/people/roiana-reid"><i class="pe-so-dribbble pe-color pe-lg pe-va"></i></a>
+                    	<a href=""><i class="pe-so-instagram pe-color pe-lg pe-va"></i></a>
+                    	<a href="https://www.linkedin.com/in/roiana-reid/"><i class="pe-so-linkedin pe-color pe-lg pe-va"></i></a>
+                    </p>
+			    </div>
+				<div class="col-md-4 list clearfix">
+					<p class="image"><img src="/static/images/sue.jpg" class="img-circle"></p>
+					<p class="name">Sue Yang</p>
+					<!--<p class="role">General Manager</p>-->
+					<p class="links">
+                    	<a href="https://www.ischool.berkeley.edu/people/xue-yang"><i class="pe-so-dribbble pe-color pe-lg pe-va"></i></a>
+                    	<a href="https://www.instagram.com/puffy_lin_bunny/"><i class="pe-so-instagram pe-color pe-lg pe-va"></i></a>
+                    	<a href="https://linkedin.com/in/sueyang2011"><i class="pe-so-linkedin pe-color pe-lg pe-va"></i></a>
+                    </p>
+			    </div>
+			</div>
+        </div>
+        <!-- \ Staff Widget -->
+     </div>
+</div>
+<!-- \ Site Main -->
+
+
+<!-- / JS Files  -->
+
+    <!-- jQuery -->
+	<script type=text/javascript src="{{url_for('static', filename='js/jQuery/jquery-3.2.1.js') }}"></script>
+    <!-- Theme Functions -->
+	<script type=text/javascript src="{{url_for('static', filename='js/functions.js') }}"></script>
+    <!-- Bootstrap -->
+    <script type=text/javascript src="{{url_for('static', filename='CaptionHoverEffects/js/bootstrap.min.js') }}"></script>
+
+<!-- \ JS Files  -->
+
+
+</body>
+</html>

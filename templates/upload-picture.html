@@ -1,0 +1,185 @@
+<!doctype html>
+
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- this styles only adds some repairs on idevices  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>Imagion - Image Scoring for Instagram Advertiser</title>
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <!--<link rel="shortcut icon" type="image/png" href="/static/images/favicon.png"/>-->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png')}}">
+
+  {% block css %}
+      <!-- Latest compiled and minified CSS -->
+
+      <!--<link href="/static/css/bootstrap.min.css" rel="stylesheet">-->
+      <link href="/static/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+      <link rel="stylesheet" href="/static/style.css">
+      <link href="/static/themes/explorer-fa/theme.css" media="all" rel="stylesheet" type="text/css"/>
+  {% endblock %}
+
+  {% block js %}
+  <script type=text/javascript src="{{url_for('static', filename='js/jQuery/jquery-3.2.1.min.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='js/popper.min.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='js/plugins/sortable.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='js/fileinput.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='js/fileinput.min.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='js/locales/fr.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='js/locales/es.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='themes/explorer-fa/theme.js') }}"></script>
+  <script type=text/javascript src="{{url_for('static', filename='themes/fa/theme.js') }}"></script>
+
+  {% endblock %}
+
+</head>
+
+
+
+<body class="upload-picture">
+
+
+    <!-- / Site Header -->
+    <div class="site-header">
+
+
+    <!-- / Site Logo -->
+    <div class="site-logo">
+      <img src="/static/images/site-logo.png" />
+    </div>
+    <!-- \ Site Logo -->
+
+
+    <!-- / Site Menu -->
+    <div class="site-menu">
+      <div class="icon"></div>
+      <div class="menu">
+        <ul>
+				<li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+				<li><a href="{{ url_for('upload_picture') }}">Upload Your Picture</a></li>
+				<li><a href="{{ url_for('blog') }}">Blog / News</a></li>
+				<li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <!-- \ Site Menu -->
+
+
+    <!-- / Site Description -->
+    <h1>
+      A smart image scoring system for Instagram advertisers.
+    </h1>
+    <!-- \ Site Description -->
+
+
+    <!-- / Site Footer -->
+    <div class="site-footer">
+      <div class="site-social">
+        <ul>
+          <li><i class="pe-so-dribbble pe-lg pe-va"></i></li>
+          <li><i class="pe-so-facebook pe-lg pe-va"></i></li>
+          <li><i class="pe-so-twitter pe-lg pe-va"></i></li>
+        </ul>
+      </div>
+
+      <p>© 2017 Imagion</p>
+      <p>2017 UCB MIDS by Haroon Choudery, Roiana Reid and Sue Yang</a></p>
+    </div>
+    <!-- \ Site Footer -->
+
+  </div>
+  <!-- \ Site Header -->
+
+
+  <!-- \ Site Main -->
+  <div class="site-main">
+    <div class="inner clearfix">
+      <h2>Upload Your Pictures (5 at most)</h2>
+
+      <div class="container kv-main">
+        <br>
+        <hr>
+
+        <form method="POST" role="form" enctype="multipart/form-data" >
+          <div class="form-group">
+            <!--<div class="file-loading">-->
+              <input id="uploadimgs" name= "uploadimgs" type="file" multiple class="file"
+                     data-overwrite-initial="false" data-min-file-count="1" data-max-file-count="5">
+            <!--</div>-->
+          </div>
+        </form>
+
+      </div>
+      <!-- / container kv-main -->
+    </div>
+    <!-- / inner clearfix -->
+  </div>
+  <!-- / Site Main -->
+
+
+
+
+
+</body>
+<script>
+    $("#test-upload").fileinput({
+        'theme': 'fa',
+        'showPreview': false,
+        'allowedFileExtensions': ['jpg', 'png', 'gif'],
+        'elErrorContainer': '#errorBlock'
+    });
+
+    $("#uploadimgs").fileinput({
+        theme: 'fa',
+        uploadUrl:"#",  // you must set a valid URL here else you will get an error
+        allowedFileExtensions: ['png', 'jpg', 'jpeg'],
+        overwriteInitial: false,
+        'showPreview': true,
+        maxFileSize: 20480,
+        maxFilesNum: 5,
+        //allowedFileTypes: ['image', 'video', 'flash'],
+        slugCallback: function (filename) {
+            return filename.replace('(', '_').replace(']', '_');
+        }
+    });
+    $(".btn-warning").on('click', function () {
+        var $el = $("#file-4");
+        if ($el.attr('disabled')) {
+            $el.fileinput('enable');
+        } else {
+            $el.fileinput('disable');
+        }
+    });
+    $(".btn-info").on('click', function () {
+        $("#file-4").fileinput('refresh', {previewClass: 'bg-info'});
+    });
+    $(document).on("ready", function() {
+        $("#uploadimgs").fileinput({
+            uploadAsync: true,
+            uploadUrl: "#",
+//            uploadExtraData: function() {
+//                return {
+//                    userid: $("#userid").val(),
+//                    username: $("#username").val()
+//                };
+//            }
+        });
+    });
+</script>
+
+<!-- / JS Files  -->
+
+    <!-- jQuery -->
+	<script type=text/javascript src="{{url_for('static', filename='js/jQuery/jquery-3.2.1.js') }}"></script>
+    <!-- Theme Functions -->
+	<script type=text/javascript src="{{url_for('static', filename='js/functions.js') }}"></script>
+
+
+<!-- \ JS Files  -->
+</html>
