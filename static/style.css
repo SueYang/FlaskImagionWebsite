@@ -183,38 +183,38 @@ svg {
 }
 /* [[[ Portfolio Single ]]] */
 
-.portfolio-single .site-main img {
+.image-score .site-main img {
 	max-width:600px;
 	width:100%;
 	height:auto;
 	margin:10px 0px;
 }
-.portfolio-single .site-main .inner {
+.image-score .site-main .inner {
 	max-width:640px;
 	width:100%;
 	margin:0px auto;
 	padding:20px;
 }
-.portfolio-single .site-main .inner h2, p {
+.image-score .site-main .inner h2, p {
 	width:100%;
 	float:left;
 	text-align:left;
 }
-.portfolio-single .site-main .inner h2 {
+.image-score .site-main .inner h2 {
 	padding-top:20px;
 }
-.portfolio-single .site-main .inner .next {
+.image-score .site-main .inner .next {
 	color:#000;
 	padding:50px;
 }
-.portfolio-single .site-main .inner .next img {
+.image-score .site-main .inner .next img {
 	width:inherit;
 	margin:10px;
 }
-.portfolio-single .site-main .desc {
+.image-score .site-main .desc {
 	margin-top:20px;
 }
-.portfolio-single .site-main li {
+.image-score .site-main li {
 	float:left;
 	width:100%;
 	margin-top:0px;
@@ -1059,4 +1059,9 @@ float:left
 
 .file-preview-initial.sortable-chosen {
     background-color: #d9edf7;
+}
+.table {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
 }

@@ -34,7 +34,6 @@
   <script type=text/javascript src="{{url_for('static', filename='js/locales/es.js') }}"></script>
   <script type=text/javascript src="{{url_for('static', filename='themes/explorer-fa/theme.js') }}"></script>
   <script type=text/javascript src="{{url_for('static', filename='themes/fa/theme.js') }}"></script>
-
   {% endblock %}
 
 </head>
@@ -106,7 +105,7 @@
         <br>
         <hr>
 
-        <form method="POST" role="form" enctype="multipart/form-data" >
+        <form method="POST" role="form" enctype="multipart/form-data">
           <div class="form-group">
             <!--<div class="file-loading">-->
               <input id="uploadimgs" name= "uploadimgs" type="file" multiple class="file"
@@ -114,9 +113,15 @@
             <!--</div>-->
           </div>
         </form>
-
       </div>
       <!-- / container kv-main -->
+      <form style="visibility: hidden" action="{{ url_for('image_score') }}" method="GET" id="varform">
+          <!--<input type="hidden" id="name" name="name" value=""/>-->
+          <!--&lt;!&ndash;<input type="hidden" id="path" name="path" value=""/>&ndash;&gt;-->
+          <!--<input type="hidden" id="rank" name="rank" value=""/>-->
+          <!--<input type="hidden" id="score" name="score" value=""/>-->
+          <input type="hidden" id="dictlist" name="dictlist" value=""/>
+       </form>
     </div>
     <!-- / inner clearfix -->
   </div>
@@ -138,16 +143,34 @@
     $("#uploadimgs").fileinput({
         theme: 'fa',
         uploadUrl:"#",  // you must set a valid URL here else you will get an error
-        allowedFileExtensions: ['png', 'jpg', 'jpeg'],
+        allowedFileExtensions: ['png', 'jpg', 'jpeg', 'bmp'],
         overwriteInitial: false,
         'showPreview': true,
         maxFileSize: 20480,
         maxFilesNum: 5,
+        uploadAsync: false,
+        removeFromPreviewOnError:true,　　// not showing thumbnails of files in other type
         //allowedFileTypes: ['image', 'video', 'flash'],
         slugCallback: function (filename) {
             return filename.replace('(', '_').replace(']', '_');
         }
-    });
+    })
+//    .on("fileuploaded", function (e, data) {
+//        var res = data.response;
+//        document.getElementById('name').value = res.name;
+////        document.getElementById('path').value=res.path ;
+//        document.getElementById('rank').value=res.rank ;
+//        document.getElementById('score').value=res.score ;
+//        document.getElementById('varform').submit();
+//     });
+    .on("filebatchuploadsuccess", function (e, data) {
+        res = JSON.stringify(data.response);
+        document.getElementById('dictlist').value = res;
+        document.getElementById('varform').submit();
+     })
+
+
+
     $(".btn-warning").on('click', function () {
         var $el = $("#file-4");
         if ($el.attr('disabled')) {
@@ -158,18 +181,6 @@
     });
     $(".btn-info").on('click', function () {
         $("#file-4").fileinput('refresh', {previewClass: 'bg-info'});
-    });
-    $(document).on("ready", function() {
-        $("#uploadimgs").fileinput({
-            uploadAsync: true,
-            uploadUrl: "#",
-//            uploadExtraData: function() {
-//                return {
-//                    userid: $("#userid").val(),
-//                    username: $("#username").val()
-//                };
-//            }
-        });
     });
 </script>
 

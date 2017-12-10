@@ -1,9 +1,10 @@
 import os
-from keras import applications
-from keras.layers import Input, Conv2D, MaxPooling2D, Dense, Dropout, Flatten
+from keras import optimizers
+from keras.models import Sequential
+from keras.layers import Conv2D, MaxPooling2D, Dense, Dropout, Flatten, Activation
 import numpy as np
 
-MODEL_WEIGHTS_NAME = "basic_model.h5"
+MODEL_WEIGHTS_NAME = "model_regress.h5"
 
 class Model(object):
     def __init__(self, app):
@@ -21,47 +22,46 @@ class Model(object):
         custom_model.load_weights(weights_path)
         # add below code to make the model run prediction once. Otherwise there would be error on GCE
         # https://zhuanlan.zhihu.com/p/27101000
-        testobj = np.zeros((160, 160, 3))
+        testobj = np.zeros((100, 100, 3))
         testobj = np.expand_dims(testobj, axis=0)
         custom_model.predict(testobj)
         return custom_model
 
 
 def build_model():
-    # If you want to specify input tensor
-    input_tensor = Input(shape=(160, 160, 3))
-    vgg_model = applications.VGG16(weights='imagenet',
-                                   include_top=False,
-                                   input_tensor=input_tensor)
+    img_rows = 100
+    img_cols = 100
 
-    # Creating dictionary that maps layer names to the layers
-    layer_dict = dict([(layer.name, layer) for layer in vgg_model.layers])
+    input_shape = (img_rows, img_cols, 3)
 
-    # Getting output tensor of the last VGG layer that we want to include
-    x = layer_dict['block4_pool'].output
+    custom_model = Sequential()
+    custom_model.add(Conv2D(32, (3, 3), padding='same',
+                     input_shape=input_shape))
+    custom_model.add(Activation('relu'))
+    custom_model.add(Conv2D(32, (3, 3)))
+    custom_model.add(Activation('relu'))
+    custom_model.add(MaxPooling2D(pool_size=(2, 2)))
+    custom_model.add(Dropout(0.25))
 
-    # Stacking a new simple convolutional network on top of it
-    x = Conv2D(filters=64, kernel_size=(3, 3), activation='relu')(x)
-    x = MaxPooling2D(pool_size=(2, 2))(x)
-    x = Flatten()(x)
-    x = Dense(256, activation='relu')(x)
-    x = Dropout(0.5)(x)
-    x = Dense(10, activation='softmax')(x)
+    custom_model.add(Conv2D(64, (3, 3), padding='same'))
+    custom_model.add(Activation('relu'))
+    custom_model.add(Conv2D(64, (3, 3)))
+    custom_model.add(Activation('relu'))
+    custom_model.add(MaxPooling2D(pool_size=(2, 2)))
+    custom_model.add(Dropout(0.25))
 
-    # my_model = pickle.load(open("file_predict.pkl", "rb"))
-    # my_model = model_from_json(json_data)
-    # Creating new model. Please note that this is NOT a Sequential() model.
-    from keras.models import Model
-    custom_model = Model(inputs=vgg_model.input, outputs=x)
+    custom_model.add(Flatten())
+    custom_model.add(Dense(512))
+    custom_model.add(Activation('relu'))
+    custom_model.add(Dropout(0.5))
+    custom_model.add(Dense(1))
+    custom_model.add(Activation('linear'))
 
-    # Make sure that the pre-trained bottom layers are not trainable
-    for layer in custom_model.layers[:15]:
-        layer.trainable = False
+    # Custom Optimizer
+    opt = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=0.1, decay=1e-6)
 
     # Do not forget to compile it
-    custom_model.compile(loss='categorical_crossentropy',
-                         optimizer='rmsprop',
-                         metrics=['accuracy'])
+    custom_model.compile(loss='mse', optimizer=opt, metrics=['accuracy'])
     return custom_model
 
 

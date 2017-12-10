@@ -14,16 +14,25 @@
   <!--<link rel="shortcut icon" type="image/png" href="/static/images/favicon.png"/>-->
   <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.png')}}">
 
-  {% block css %}
-      <!-- Latest compiled and minified CSS -->
+    {% block css %}
+    <!-- Latest compiled and minified CSS -->
 
-      <!--<link href="/static/css/bootstrap.min.css" rel="stylesheet">-->
-      <link href="/static/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
-      <link rel="stylesheet" href="/static/style.css">
-      <link href="/static/themes/explorer-fa/theme.css" media="all" rel="stylesheet" type="text/css"/>
-      <style type="text/css">div.inline { float:left; }</style>
-  {% endblock %}
+    <!--<link href="/static/css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="/static/css/fileinput.css" media="all" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="/static/themes/explorer-fa/theme.css" media="all" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        div.inline { float:left; }
+        table {
+            border-collapse: collapse;
+        }
+        td, th {
+            border: 10px solid rgba(255, 255, 255, 0.32);
+        }
+    </style>
+
+    {% endblock %}
 
   {% block js %}
   <script type=text/javascript src="{{url_for('static', filename='js/jQuery/jquery-3.2.1.min.js') }}"></script>
@@ -119,41 +128,62 @@
         var res_json = {{ reslist|tojson }};
         reslist = $.parseJSON(res_json);
         var uploadpath = '{{ url_for("upload_path") }}';
-        console.log(uploadpath)
+//        console.log(uploadpath);
+        function getSuggesion(score) {
+            s1 = "girl, swimwear, mammal, people, t shirt, leg, vacation, beauty, rock, human hair color.";
+            s2 = "cat, mountainous landforms, man, eyebrow, waterway, snow, human haircolor, hair, eyeware, blue.";
+            s3 = "product, art, meal, purple, text, furniture, black and white, landmark, dish, red.";
+            if(score > 7.5){
+                return "This image is associated with a good score. Our analysis also shows that images of these types tend to get a higher score: " + s1;
+            }
+            else if (score >= 2.5 && score <=7.5 ){
+                return "This image is associated with a fine score. Based on our analysis, try to change the image to these types: " + s1;
+            }
+            else {
+                return "This image is associated with a poor score. Based on our analysis, try to change the image to these types: " + s1
+                    + "And you can also try these objects: " + s2 + "But this may just give you a fine score" ;
+            }
+
+        }
         function onLoading() {
             console.log("load");
-//            createTable();
-//            function createTable()  {
             var numRows = reslist.length;
-            var numCols = 2;
+            var numCols = 3;
             var tbody = '';
-            var theader = '<div><table border="0" align="center">\n';
+            var theader = '<div><table border="1" align="center" style="width: 80%">\n';
+            tbody += '<tr>';
+            tbody += '<td style="width: 5%; font-size: large;"><strong>RANK</strong></td>';
+            tbody += '<td style="width: 45%; font-size: large;"><strong>IMAGE</strong></td>';
+            tbody += '<td style="width: 50%" font-size: large;"><strong>SCORE/SUGGESTION</strong></td>';
+            tbody += '</tr>\n';
             for(var i=0; i<numRows; i++){
-//                    var path = reslist[i].path;
                 var name = reslist[i].name;
-                var rank = reslist[i].rank;
-                var score = reslist[i].score;
-                console.log(name);
-                // image
+                var rank = i + 1;
+                var score = reslist[i].score.toFixed(1);
+                var suggestion = getSuggesion(score);
+
                 tbody += '<tr>';
-                tbody += '<td>';
+                // column1: name, rank
+                tbody += '<td style="width: 5%; background-color: rgba(32,145,250,0.05)">';
+                tbody += '<li>' + rank + '</li>';
+                tbody += '<li style="font-style: italic;font-size: x-small; overflow-style: auto">' + name + '</li>';
+                tbody += '</td>';
+                // column2: image
+                tbody += '<td style="width: 45%; ">';
                 var filepath = uploadpath + '/' + name;
                 console.log(filepath);
                 tbody += '<img src= ' + '"'+filepath+'"' +'>';
                 tbody += '</td>';
-                // description
-                tbody += '<td>';
-                tbody += '<li style="font-style: italic">' + name + '</li>';
-                tbody += '<li>Rank:' + rank + '</li>';
-                tbody += '<li>Score:' + score + '</li>';
+                // column3: score, suggestion
+                tbody += '<td style="width: 50%; background-color: rgba(32,145,250,0.05)">';
+                tbody += '<li>' + score + '</li>';
+                tbody += '<li style="font-style: italic;font-size: x-small; overflow-style: auto">Suggestion:' + suggestion + '</li>';
                 tbody += '</td>';
-
                 tbody += '</tr>\n';
             }
             var tfooter = '</table></div>';
-            console.log(theader + tbody + tfooter);
+//            console.log(theader + tbody + tfooter);
             document.getElementById('result').innerHTML = theader + tbody + tfooter;
-//            }
         }
     </script>
 </body>

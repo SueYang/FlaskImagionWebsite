@@ -1,11 +1,11 @@
 class Result(object):
-    path = ""
+    # path = ""
     name = ""
     score = ""
-    rank = ""
+    # rank = ""
 
-    def __init__(self, path, name, score, rank):
-        self.path = path
+    def __init__(self, name, score):
+        # self.path = path
         self.name = name
         self.score = score
-        self.rank = rank
+        # self.rank = rank

@@ -1066,6 +1066,7 @@
                         sDrg = $h.ifSet('showDrag', config, $h.ifSet('showDrag', fs, true)),
                         dis = (url === false) && isDisabled;
                     sDwl = sDwl && config.downloadUrl !== false && !!dUrl;
+                    console.log('caption is: '+dFil),
                     a = self._renderFileActions(false, sDwl, sDel, sZm, sDrg, dis, url, key, true, dUrl, dFil);
                     return self._getLayoutTemplate('footer').setTokens({
                         'progress': self._renderThumbProgress(),
@@ -2370,6 +2371,7 @@
             };
             fnSuccess = function (data, textStatus, jqXHR) {
                 /** @namespace data.errorkeys */
+
                 var outData = self._getOutData(jqXHR, data), key = 0,
                     $thumbs = self._getThumbs(':not(.file-preview-success)'),
                     keys = $h.isEmpty(data) || $h.isEmpty(data.errorkeys) ? [] : data.errorkeys;
@@ -3563,7 +3565,7 @@
             size = self._getSize(size);
             if (self.isAjaxUpload) {
                 out = template.setTokens({
-                    'actions': self._renderFileActions(upl, false, rem, zoom, drg, false, false, false),
+                    'actions': self._renderFileActions(false, false, rem, zoom, drg, false, false, false),
                     'caption': caption,
                     'size': size,
                     'width': width,
@@ -4119,7 +4121,7 @@
         showUpload: true,
         showCancel: true,
         showClose: true,
-        showUploadedThumbs: true,
+        showUploadedThumbs: false,
         browseOnZoneClick: false,
         autoReplace: false,
         autoOrientImage: true, // for JPEG images based on EXIF orientation tag
